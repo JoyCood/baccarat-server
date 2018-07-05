@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+enum PROTOCOL {
+    UNKNOWN = 0;
+    REGISTER = 110000; //注册
+    LOGIN = 110001; //登录
+    JOIN_ROOM = 100000; //进入房间
+    LEAVE_ROOM = 100001; //离开房间
+    BET = 100002; //下注
+    HALL_LIST = 100003; //大厅列表
+    CLOSE = 100004; //关闭游戏
+}
+
+enum ERROR_CODE {
+    SUCCESS = 0;
+    ERROR_PASSWORD_INVALID = 100000;
+    ERROR_ROOM_FULL = 100001;
+    ERROR_BET_FAILURE = 100002;
+    ERROR_NOT_LOGIN = 100003;
+    ERROR_NOT_IN_ROOM = 100004;
+}
+
+enum BET_TYPE {
+    BET_TYPE_UNKNOWN = 0;
+    BANKER = 1;
+    PLAYER = 2;
+    TIE = 3;
+}
+
+//玩家信息
+message Player {
+    string id    = 1;
+    string name  = 2;
+    int32 money = 3;
+}
+
+message Seat {
+    uint32 id = 1;
+    string player_id = 2;
+}
+
+//登录大厅
+message LoginRequest {
+    string phone = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string   room_id = 1;
+    string   player_id = 2;
+    repeated Player players = 3;
+    ERROR_CODE error_code = 4;
+}
+
+
+//大厅列表
+message HallListResponse {
+    message Hall {
+		int32 id = 1;
+		string title = 2;
+		int32 min = 3;
+		int32 max = 4;
+    } 
+    repeated Hall hall = 1;
+    ERROR_CODE error_code = 2;
+}
+
+//进入房间
+message JoinRoomRequest {
+    int32 lobby_id = 1;
+}
+
+message JoinRoomResponse {
+    string room_id = 1;
+    string player_id = 2;
+    repeated Player players = 3;
+    repeated Seat seats = 4;
+    ERROR_CODE error_code = 5;
+}
+
+//下注
+message BetRequest {
+    int32 money = 1;
+    BET_TYPE type = 2;
+}
+
+message BetResponse {
+    string player_id = 1;
+    BET_TYPE type = 2;
+    int32 money = 3;  
+    ERROR_CODE error_code = 4;
+}
+
+//发牌
+message DealCardResponse {
+    int32 id = 1;
+} 
+
+//关闭游戏
+message CloseRequest {
+
+}
+
