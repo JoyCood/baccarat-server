@@ -16,6 +16,7 @@ class Game(object):
         self._game_event_dispatcher = game_event_dispatcher
         self._deal_card = threading.Event()
         self._logger = logger
+        self._contract_shuffle = ContractShuffle(self._room_id)
         #self._bets = {'bank':{}, 'play':{}, 'tie': {}}
 
     def start(self):
@@ -58,7 +59,7 @@ class Game(object):
     #洗牌
     def _shuffle(self):
         self._logger.info('shuffle')
-        #contract.shuffle(self._room_id)
+        contract_shuffle.shuffle(self._room_id)
 
     def deal(self):
         try:

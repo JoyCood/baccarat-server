@@ -12,6 +12,7 @@ HALLS = [
 ]
 
 contract = {
+    'transact_account': '0x14CD5c014C56cd8464f871b0955Aa3B23EB78B5a',
     'provider_url': 'http://localhost:8545',        
     'contract_address': '0xcd46ebf5c3cec2b062a809d39a834c5f01e30852',
     'abi_file': 'docs/abi.json'
